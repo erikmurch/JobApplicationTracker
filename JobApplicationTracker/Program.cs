@@ -70,7 +70,7 @@ while (isRunning)
 
 
         case "4":
-        // Comming soon
+        jobManager.ShowSortedByDate();
         break;
 
 

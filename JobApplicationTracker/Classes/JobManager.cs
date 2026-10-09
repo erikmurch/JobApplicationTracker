@@ -216,4 +216,24 @@ public class JobManager
             Console.WriteLine(application.GetSummary());
         }
     }
+
+
+
+    public void ShowSortedByDate()
+    {
+        // Om det är tomt, avsluta.
+        if (Applications.Count == 0)
+        {
+            Console.WriteLine("Det finns inget att se här.");
+            return;
+        }
+        // Betyder att använd varje ansökans datum som sorteringsvärde.
+        // OrderBy ger ut äldsta ansöknings datumet först.
+        var sortedApplications = Applications.OrderBy(a => a.ApplicationDate).ToList();
+
+        foreach (JobApplication application in sortedApplications)
+        {
+            Console.WriteLine(application.GetSummary());
+        }
+    }
 }
