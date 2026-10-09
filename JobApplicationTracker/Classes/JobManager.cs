@@ -180,4 +180,12 @@ public class JobManager
         Applications.RemoveAt(index);
         Console.WriteLine("Ansökan har tagits bort.");
     }
+
+
+
+    public void ShowStatistics()
+    {
+        // Skriver ut antal ansökningar
+        Console.WriteLine($"Totalt antal ansökningar: {Applications.Count}");
+    }
 }
