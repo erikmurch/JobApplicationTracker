@@ -188,4 +188,32 @@ public class JobManager
         // Skriver ut antal ansökningar
         Console.WriteLine($"Totalt antal ansökningar: {Applications.Count}");
     }
+
+
+    public void ShowByStatus(Status selectedStatus)
+    {
+        // Om det är tomt, avsluta.
+        if (Applications.Count == 0)
+        {
+            Console.WriteLine("Det finns inget att se här.");
+            return;
+        }
+        // Where väljer ansökningar med den valda statusen.
+        // ToList samlar resultatet i en ny lista.
+        // a är en ansökan som LINQ undersöker
+        // a.Status == selectedStatus kollar om ansökan har den valda statusen
+        var filteredApplications = Applications.Where(a => a.Status == selectedStatus).ToList();
+
+        if (filteredApplications.Count == 0)
+        {
+            Console.WriteLine($"Det finns inga ansökningar med status {selectedStatus}.");
+            return;
+        }
+
+        // Skriver ut summeringen av matchande ansökan.
+        foreach (JobApplication application in filteredApplications)
+        {
+            Console.WriteLine(application.GetSummary());
+        }
+    }
 }
