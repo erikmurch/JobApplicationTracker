@@ -1,4 +1,6 @@
 ﻿// Skapar objekt jobManager.
+using System.Threading.Tasks.Dataflow;
+
 JobManager jobManager = new JobManager();
 
 // Om denna är true fortsätter programmet att köras.
@@ -32,12 +34,43 @@ while (isRunning)
 
 
         case "3":
-        // Comming soon
+        Console.WriteLine("1) Applied");
+        Console.WriteLine("2) Interview");
+        Console.WriteLine("3) Offer");
+        Console.WriteLine("4) Rejected");
+        Console.WriteLine("Vilken status vill du filtrera efter?");
+        string filterChoice = Console.ReadLine()?? "";
+        
+        switch (filterChoice)
+            {
+                case "1":
+                jobManager.ShowByStatus(Status.Applied);
+                break;
+
+
+                case"2":
+                jobManager.ShowByStatus(Status.Interview);
+                break;
+
+
+                case "3":
+                jobManager.ShowByStatus(Status.Offer);
+                break;
+
+
+                case "4":
+                jobManager.ShowByStatus(Status.Rejected);
+                break;
+            default:
+                Console.WriteLine("Ogiltigt val.");
+                break;
+
+            }
         break;
 
 
         case "4":
-        // Comming soon
+        jobManager.ShowSortedByDate();
         break;
 
 
@@ -59,7 +92,7 @@ while (isRunning)
         case "8":
         isRunning = false;
         break;
-        default:
+    default:
         Console.WriteLine("Ogiltigt val, välj något av ovanstående alternativ.");
         break;
     }

@@ -187,5 +187,80 @@ public class JobManager
     {
         // Skriver ut antal ansökningar
         Console.WriteLine($"Totalt antal ansökningar: {Applications.Count}");
+        // LINQ metoden här räknar bara ansökningarna som uppfyller villkoret
+        // dvs är den här ansökans status Interview
+        int interviewCount = Applications.Count(a => a.Status == Status.Interview);
+        Console.WriteLine($"Interview: {interviewCount}");
+
+        int appliedCount = Applications.Count(a => a.Status == Status.Applied);
+        Console.WriteLine($"Applied: {appliedCount}");
+
+        int offerCount = Applications.Count(a => a.Status == Status.Offer);
+        Console.WriteLine($"Offer: {offerCount}");
+
+        int rejectedCount = Applications.Count(a => a.Status == Status.Rejected);
+        Console.WriteLine($"Rejected: {rejectedCount}");
+
+        // !=null säger att ett svarsdatum finns.
+        var respondedApplications = Applications.Where(a => a.ResponseDate != null).ToList();
+        if (respondedApplications.Count == 0)
+        {
+            Console.WriteLine("Finns ingen genomsnittlig svarstid då inga svar är registrerade.");
+            return;
+        }
+        // Räknar ut genomsnitt för antal dagar mellan ansökan och första registrerat svar
+        // Value hämtar datumet ifrån "DateTime?"
+        // .Date jämför datum
+        // TotalDays ger skillnaden i dagar
+        double averageResponseTime = respondedApplications.Average(a => (a.ResponseDate.Value.Date - a.ApplicationDate).TotalDays);
+        Console.WriteLine($"Genomsnittlig svarstid: {averageResponseTime} dagar");
+    }
+
+
+    public void ShowByStatus(Status selectedStatus)
+    {
+        // Om det är tomt, avsluta.
+        if (Applications.Count == 0)
+        {
+            Console.WriteLine("Det finns inget att se här.");
+            return;
+        }
+        // Where väljer ansökningar med den valda statusen.
+        // ToList samlar resultatet i en ny lista.
+        // a är en ansökan som LINQ undersöker
+        // a.Status == selectedStatus kollar om ansökan har den valda statusen
+        var filteredApplications = Applications.Where(a => a.Status == selectedStatus).ToList();
+
+        if (filteredApplications.Count == 0)
+        {
+            Console.WriteLine($"Det finns inga ansökningar med status {selectedStatus}.");
+            return;
+        }
+
+        // Skriver ut summeringen av matchande ansökan.
+        foreach (JobApplication application in filteredApplications)
+        {
+            Console.WriteLine(application.GetSummary());
+        }
+    }
+
+
+
+    public void ShowSortedByDate()
+    {
+        // Om det är tomt, avsluta.
+        if (Applications.Count == 0)
+        {
+            Console.WriteLine("Det finns inget att se här.");
+            return;
+        }
+        // Betyder att använd varje ansökans datum som sorteringsvärde.
+        // OrderBy ger ut äldsta ansöknings datumet först.
+        var sortedApplications = Applications.OrderBy(a => a.ApplicationDate).ToList();
+
+        foreach (JobApplication application in sortedApplications)
+        {
+            Console.WriteLine(application.GetSummary());
+        }
     }
 }
