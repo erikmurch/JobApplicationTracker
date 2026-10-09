@@ -1,6 +1,5 @@
 public class JobManager
 {
-    //Attributer/egenskaper
     // Skapar en lista av typen JobApplication
     // Den fylls på när använaren lägger till ansökningar
     // get; låter mig hämta listan
@@ -145,5 +144,40 @@ public class JobManager
         {
             Console.WriteLine(application.GetSummary());
         }
+    }
+
+    public void RemoveJob()
+    {
+        if (Applications.Count == 0)
+        {
+            Console.WriteLine("Det finns inga anökningar att ta bort.");
+            return;
+        }
+
+        // Visar ansökningar med nummer så att användaren kan välja vilken som ska tas bort.
+        // Listans index/positionsnummer börjar på 0, därför visas i + 1 som nummer.
+        for (int i = 0; i < Applications.Count; i++)
+        {
+            // Skriver ut ansökningar
+            Console.WriteLine($"{i + 1}. {Applications[i].GetSummary()}");
+        }
+
+        Console.WriteLine("Ange nummer på den ansökan du vill ta bort.");
+        string applicationNumberInput = Console.ReadLine() ?? "";
+        // Omvandlar string till int och döper den till applicationNumber
+        int applicationNumber = int.Parse(applicationNumberInput);
+        // Översätter användarens nummer till listans index genom att ta bort ett.
+        int index = applicationNumber - 1;
+
+        // Kollar så valt index finns i listan
+        if (index < 0 || index >= Applications.Count)
+        {
+            Console.WriteLine("Ogiltigt ansökningsnummer.");
+            return;
+        }
+
+        // Tar bort ansökan på valt index/positionsnummer
+        Applications.RemoveAt(index);
+        Console.WriteLine("Ansökan har tagits bort.");
     }
 }
