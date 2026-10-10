@@ -299,4 +299,29 @@ public class JobManager
             Console.WriteLine(application.GetSummary());
         }
     }
+
+
+
+    public void ShowUnansweredOlderThan14Days()
+    {
+        // Om det är tomt, avsluta.
+        if (Applications.Count == 0)
+        {
+            Console.WriteLine("Det finns inget att se här.");
+            return;
+        }
+        // Filtrerar fram ansökningar som saknar svar och är äldre än 14 dagar.
+        var unansweredApplications = Applications.Where(a => a.ResponseDate == null && a.GetDaysSinceApplied() > 14).ToList();
+        if (unansweredApplications.Count == 0)
+        {
+            Console.WriteLine("Inga obesvarade ansökningar är äldre än 14 dagar.");
+            return;
+        }
+        // För varje ansökan i obesvarade ansökningar
+        // Hämtar summeringen
+        foreach (JobApplication application in unansweredApplications)
+        {
+            Console.WriteLine(application.GetSummary());
+        }
+    }
 }

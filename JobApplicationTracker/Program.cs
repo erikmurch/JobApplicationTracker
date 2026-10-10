@@ -16,7 +16,8 @@ while (isRunning)
     Console.WriteLine("5) Visa statistik");
     Console.WriteLine("6) Uppdatera status");
     Console.WriteLine("7) Ta bort ansökan");
-    Console.WriteLine("8) Avsluta");
+    Console.WriteLine("8) Visa obessvarade ansökningar äldre än 14 dagar");
+    Console.WriteLine("9) Avsluta");
     Console.Write("Välj: ");
     string menuChoice = Console.ReadLine()?? "";
 
@@ -90,11 +91,17 @@ while (isRunning)
 
 
         case "8":
+        jobManager.ShowUnansweredOlderThan14Days();
+        break;
+
+
+        case "9":
         isRunning = false;
         break;
     default:
         Console.WriteLine("Ogiltigt val, välj något av ovanstående alternativ.");
         break;
+
     }
 
 }
