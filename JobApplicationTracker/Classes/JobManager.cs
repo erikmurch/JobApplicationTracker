@@ -24,14 +24,36 @@ public class JobManager
         //Datum
         Console.WriteLine("Vilket datum skickade du ansökan? Ange ÅÅÅÅ-MM-DD:");
         string applicationDateInput = Console.ReadLine() ?? "";
-        // Omvandlar användarens datumtext till ett DateTime värde. 
-        DateTime applicationDate = DateTime.Parse(applicationDateInput);
+        // Om omvandlingen misslyckas skrivs detta ut.
+        if (!DateTime.TryParse(applicationDateInput, out DateTime applicationDate))
+        {
+            Console.WriteLine("Ogiltigt datum.");
+            return;
+        }
+        // Om datumet är före dagens datum körs detta.
+        if(applicationDate.Date > DateTime.Today)
+        {
+            Console.WriteLine("Inskrivet datum kan INTE vara i framtiden.");
+            return;
+        }
 
         //Lön
         Console.WriteLine("Vilken lön önskar du? Ange i siffror:");
         string salaryExpectationInput = Console.ReadLine() ?? "";
-        //Omvandlar string till int som kan ta emot siffror
-        int salaryExpectation = int.Parse(salaryExpectationInput);
+        // TryParse retunerar true eller false.
+        // Omvandlar till Heltal. Out skriver ett värde till variabeln salaryExpectation.
+        // if körs om omvandlingen misslyckas.
+        if (!int.TryParse(salaryExpectationInput, out int salaryExpectation))
+        {
+            Console.WriteLine("Ogiltig lön, ange i siffror.");
+            return;
+        }
+        // Om angiven lön är mindre än 0 körs detta.
+        if(salaryExpectation < 0)
+        {
+            Console.WriteLine("Önskad lön får inte vara negativ.");
+            return;
+        }
 
         // Skapar ett objet och tilldelar den värden.
         JobApplication application = new JobApplication();
@@ -68,8 +90,15 @@ public class JobManager
 
         Console.WriteLine("Ange numret på ansökan du vill updatera:");
         string applicationNumberInput = Console.ReadLine() ?? "";
-        // Omvandlar string till int och döper den till applicationNumber
-        int applicationNumber = int.Parse(applicationNumberInput);
+        // Kollar så att användarens tal kan omvandlas till heltal
+        // Try.Parse retunerar true/false
+        // Out skriver värde till variablen applicationNumber
+        // int = heltal
+        if (!int.TryParse(applicationNumberInput, out int applicationNumber))
+        {
+            Console.WriteLine("Ogiltigt nummer, försök igen.");
+            return;
+        }
         // Översätter användarens nummer till listans index genom att ta bort ett.
         int index = applicationNumber -1;
 
@@ -164,8 +193,15 @@ public class JobManager
 
         Console.WriteLine("Ange nummer på den ansökan du vill ta bort.");
         string applicationNumberInput = Console.ReadLine() ?? "";
-        // Omvandlar string till int och döper den till applicationNumber
-        int applicationNumber = int.Parse(applicationNumberInput);
+        // Kollar så att användarens tal kan omvandlas till heltal
+        // Try.Parse retunerar true/false
+        // Out skriver värde till variablen applicationNumber
+        // int = heltal
+        if (!int.TryParse(applicationNumberInput, out int applicationNumber))
+        {
+            Console.WriteLine("Ogiltigt nummer, försök igen.");
+            return;
+        }
         // Översätter användarens nummer till listans index genom att ta bort ett.
         int index = applicationNumber - 1;
 
