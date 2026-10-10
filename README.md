@@ -5,7 +5,7 @@ Detta är en C# console app där man kan lägga till jobb ansökningar och sedan
 Ansökningarna sparas endast medans programmet är igång sedan när man avslutar programmet så försvinner ansökningarna.
 
 ## Hur man kör programmet:
-Ladda ner Git.
+Ladda ner Git och .NET SDK.
 Högerklicka på lokala mappen där du vill ha projektet och tryck på "Open git bash here"
 Clonea ner repositoriet genom att skriva "git clone "URL". Alltså URL ifrån github repo. Denna länken är URL: https://github.com/erikmurch/JobApplicationTracker.git
 Sedan öppnar projektet i Visual Studio Code genom att högerklicka på lokala mappen och tryck på VS code.

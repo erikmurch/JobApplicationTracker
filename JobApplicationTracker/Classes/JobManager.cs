@@ -81,12 +81,8 @@ public class JobManager
             Console.WriteLine("Det finns inga ansökningar att uppdatera.");
             return;
         }
-        // Visar ansökningar med nummer så att användaren kan välja vilken som ska uppdateras.
-        // Listans index/positionsnummer börjar på 0, därför visas i + 1 som nummer.
-        for (int i = 0; i < Applications.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {Applications[i].GetSummary()}");
-        }
+        // Kallar på metod
+        ShowNumberedApplications();
 
         Console.WriteLine("Ange numret på ansökan du vill updatera:");
         string applicationNumberInput = Console.ReadLine() ?? "";
@@ -157,6 +153,8 @@ public class JobManager
         }
     }
 
+
+
     public void ShowAll()
     {
         // Om listan är tom
@@ -171,28 +169,13 @@ public class JobManager
         // Detta block säger för varje application i listan(Applications), get summary och skriv ut den.
         foreach (JobApplication application in Applications)
         {
-            switch (application.Status)
-            {
-                // skriver ut färger
-                // Case blir Satus.____ för att Status är enum.
-                case Status.Offer:
-                Console.ForegroundColor = ConsoleColor.Green;
-                break;
-
-                case Status.Rejected:
-                Console.ForegroundColor = ConsoleColor.Red;
-                break;
-
-                default:
-                //  Återställer färgerna 
-                Console.ResetColor();
-                break;
-            }
-            //Återställer färgerna & skriver ut Summary.
-            Console.WriteLine(application.GetSummary());
-            Console.ResetColor();
+            PrintApplication(application);
         }
+        
     }
+
+
+
 
     public void RemoveJob()
     {
@@ -202,13 +185,7 @@ public class JobManager
             return;
         }
 
-        // Visar ansökningar med nummer så att användaren kan välja vilken som ska tas bort.
-        // Listans index/positionsnummer börjar på 0, därför visas i + 1 som nummer.
-        for (int i = 0; i < Applications.Count; i++)
-        {
-            // Skriver ut ansökningar
-            Console.WriteLine($"{i + 1}. {Applications[i].GetSummary()}");
-        }
+        ShowNumberedApplications();
 
         Console.WriteLine("Ange nummer på den ansökan du vill ta bort.");
         string applicationNumberInput = Console.ReadLine() ?? "";
@@ -235,6 +212,7 @@ public class JobManager
         Applications.RemoveAt(index);
         Console.WriteLine("Ansökan har tagits bort.");
     }
+
 
 
 
@@ -295,7 +273,7 @@ public class JobManager
         // Skriver ut summeringen av matchande ansökan.
         foreach (JobApplication application in filteredApplications)
         {
-            Console.WriteLine(application.GetSummary());
+            PrintApplication(application);
         }
     }
 
@@ -315,7 +293,7 @@ public class JobManager
 
         foreach (JobApplication application in sortedApplications)
         {
-            Console.WriteLine(application.GetSummary());
+            PrintApplication(application);
         }
     }
 
@@ -340,7 +318,49 @@ public class JobManager
         // Hämtar summeringen
         foreach (JobApplication application in unansweredApplications)
         {
-            Console.WriteLine(application.GetSummary());
+            PrintApplication(application);
         }
     }
+
+
+
+
+    private void PrintApplication(JobApplication application)
+    {
+        switch (application.Status)
+            {
+                // skriver ut färger
+                // Case blir Satus.____ för att Status är enum.
+                case Status.Offer:
+                Console.ForegroundColor = ConsoleColor.Green;
+                break;
+
+                case Status.Rejected:
+                Console.ForegroundColor = ConsoleColor.Red;
+                break;
+
+                default:
+                //  Återställer färgerna 
+                Console.ResetColor();
+                break;
+            }
+            //Återställer färgerna & skriver ut Summary.
+            Console.WriteLine(application.GetSummary());
+            Console.ResetColor();
+    }
+
+
+
+
+    private void ShowNumberedApplications()
+    {
+        // Visar ansökningar med nummer så att användaren kan välja vilken som ska tas bort.
+        // Listans index/positionsnummer börjar på 0, därför visas i + 1 som nummer.
+        for (int i = 0; i < Applications.Count; i++)
+        {
+            // Skriver ut ansökningar
+            Console.WriteLine($"{i + 1}. {Applications[i].GetSummary()}");
+        }
+    }
+
 }
