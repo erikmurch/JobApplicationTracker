@@ -171,7 +171,26 @@ public class JobManager
         // Detta block säger för varje application i listan(Applications), get summary och skriv ut den.
         foreach (JobApplication application in Applications)
         {
+            switch (application.Status)
+            {
+                // skriver ut färger
+                // Case blir Satus.____ för att Status är enum.
+                case Status.Offer:
+                Console.ForegroundColor = ConsoleColor.Green;
+                break;
+
+                case Status.Rejected:
+                Console.ForegroundColor = ConsoleColor.Red;
+                break;
+
+                default:
+                //  Återställer färgerna 
+                Console.ResetColor();
+                break;
+            }
+            //Återställer färgerna & skriver ut Summary.
             Console.WriteLine(application.GetSummary());
+            Console.ResetColor();
         }
     }
 
