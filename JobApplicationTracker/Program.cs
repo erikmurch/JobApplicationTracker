@@ -1,6 +1,10 @@
 ﻿// Skapar objekt jobManager.
 JobManager jobManager = new JobManager();
 
+// Skapar objekt och lägger in metoden.
+ExampleData exampleData = new ExampleData();
+exampleData.Testers(jobManager);
+
 // Om denna är true fortsätter programmet att köras.
 bool isRunning = true;
 // Skapar objekt av menyn
@@ -8,9 +12,11 @@ MenuHelper menuHelper = new MenuHelper();
 
 while (isRunning)
 {
+    Console.Clear();
     // Anropar
     menuHelper.ShowMenu();
     string menuChoice = Console.ReadLine()?? "";
+    Console.Clear();
 
 
     switch (menuChoice)
@@ -26,7 +32,7 @@ while (isRunning)
 
 
         case "3":
-        ShowStatusFilterMenu();
+        menuHelper.ShowStatusFilterMenu(jobManager);
         break;
 
 
@@ -58,46 +64,15 @@ while (isRunning)
         case "9":
         isRunning = false;
         break;
-    default:
+        default:
         Console.WriteLine("Ogiltigt val, välj något av ovanstående alternativ.");
         break;
-
     }
 
-}
-// Metod för case 3
-void ShowStatusFilterMenu()
-{
-    Console.WriteLine("1) Applied");
-        Console.WriteLine("2) Interview");
-        Console.WriteLine("3) Offer");
-        Console.WriteLine("4) Rejected");
-        Console.WriteLine("Vilken status vill du filtrera efter?");
-        string filterChoice = Console.ReadLine()?? "";
-        
-        switch (filterChoice)
-            {
-                case "1":
-                jobManager.ShowByStatus(Status.Applied);
-                break;
+    if (isRunning)
+    {
+        Console.WriteLine("Tryck Enter för att återgå till Menyn.");
+        Console.ReadLine();
+    }
 
-
-                case"2":
-                jobManager.ShowByStatus(Status.Interview);
-                break;
-
-
-                case "3":
-                jobManager.ShowByStatus(Status.Offer);
-                break;
-
-
-                case "4":
-                jobManager.ShowByStatus(Status.Rejected);
-                break;
-            default:
-                Console.WriteLine("Ogiltigt val.");
-                break;
-
-            }
 }
