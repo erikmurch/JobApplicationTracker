@@ -82,7 +82,7 @@ public class JobManager
             return;
         }
         // Kallar på metod
-        ShowNumberedApplications();
+        applicationPrinter.ShowNumberedApplications(Applications);
 
         Console.WriteLine("Ange numret på ansökan du vill updatera:");
         string applicationNumberInput = Console.ReadLine() ?? "";
@@ -169,7 +169,7 @@ public class JobManager
         // Detta block säger för varje application i listan(Applications), get summary och skriv ut den.
         foreach (JobApplication application in Applications)
         {
-            PrintApplication(application);
+            applicationPrinter.PrintApplication(application);
         }
         
     }
@@ -185,14 +185,13 @@ public class JobManager
             return;
         }
 
-        ShowNumberedApplications();
+        applicationPrinter.ShowNumberedApplications(Applications);
 
         Console.WriteLine("Ange nummer på den ansökan du vill ta bort.");
         string applicationNumberInput = Console.ReadLine() ?? "";
         // Kollar så att användarens tal kan omvandlas till heltal
         // Try.Parse retunerar true/false
         // Out skriver värde till variablen applicationNumber
-        // int = heltal
         if (!int.TryParse(applicationNumberInput, out int applicationNumber))
         {
             Console.WriteLine("Ogiltigt nummer, försök igen.");
@@ -273,7 +272,7 @@ public class JobManager
         // Skriver ut summeringen av matchande ansökan.
         foreach (JobApplication application in filteredApplications)
         {
-            PrintApplication(application);
+            applicationPrinter.PrintApplication(application);
         }
     }
 
@@ -293,7 +292,7 @@ public class JobManager
 
         foreach (JobApplication application in sortedApplications)
         {
-            PrintApplication(application);
+            applicationPrinter.PrintApplication(application);
         }
     }
 
@@ -318,49 +317,12 @@ public class JobManager
         // Hämtar summeringen
         foreach (JobApplication application in unansweredApplications)
         {
-            PrintApplication(application);
+            applicationPrinter.PrintApplication(application);
         }
     }
 
 
 
-
-    private void PrintApplication(JobApplication application)
-    {
-        switch (application.Status)
-            {
-                // skriver ut färger
-                // Case blir Satus.____ för att Status är enum.
-                case Status.Offer:
-                Console.ForegroundColor = ConsoleColor.Green;
-                break;
-
-                case Status.Rejected:
-                Console.ForegroundColor = ConsoleColor.Red;
-                break;
-
-                default:
-                //  Återställer färgerna 
-                Console.ResetColor();
-                break;
-            }
-            //Återställer färgerna & skriver ut Summary.
-            Console.WriteLine(application.GetSummary());
-            Console.ResetColor();
-    }
-
-
-
-
-    private void ShowNumberedApplications()
-    {
-        // Visar ansökningar med nummer så att användaren kan välja vilken som ska tas bort.
-        // Listans index/positionsnummer börjar på 0, därför visas i + 1 som nummer.
-        for (int i = 0; i < Applications.Count; i++)
-        {
-            // Skriver ut ansökningar
-            Console.WriteLine($"{i + 1}. {Applications[i].GetSummary()}");
-        }
-    }
-
+    // Hämtar metoden ApplicationPrinter PrintApplication.
+    private ApplicationPrinter applicationPrinter = new ApplicationPrinter();
 }
